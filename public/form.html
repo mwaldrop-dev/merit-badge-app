@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merit Badge Form</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-form">
+
+  <header class="site-header no-print">
+    <div class="header-inner">
+      <a href="/" class="btn btn-ghost back-link">← All Badges</a>
+      <div class="header-actions">
+        <a id="source-link" href="#" target="_blank" rel="noopener" class="btn btn-ghost" hidden>Requirements Page</a>
+        <a id="pamphlet-link" href="#" target="_blank" rel="noopener" class="btn btn-ghost" hidden>Download Pamphlet</a>
+        <button id="clear-btn" class="btn btn-ghost">Clear Saved</button>
+        <button id="pdf-btn" class="btn btn-primary">Download Fillable PDF</button>
+        <button id="print-btn" class="btn btn-ghost">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" id="form-container">
+    <div class="loading-state">Loading badge requirements…</div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

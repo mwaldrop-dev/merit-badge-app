@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merit Badge Worksheet Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-index">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="header-logo">⚜️</div>
+        <div>
+          <h1 class="site-title">Merit Badge Resources</h1>
+          <p class="site-subtitle">Convenient tools for Scouts and Merit Badge Counselors</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="/admin.html" class="btn btn-ghost">Manage Badges</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="card about-card">
+      <h2>About This Tool</h2>
+      <div class="about-content">
+        <p>
+          This application is intended to be a resource for Scouts and Merit badge counselors to easily 
+          access the latest merit badge info and generate an up to date worksheet to capture some 
+          of the work.  This does NOT replace Blue Cards and is NOT an official source for requirements.
+          The Scouting America links will take you to official requirements and merit badge pamphlets.
+        </p>
+        <p>
+         The worksheets generated are straight forward and fairly simple, and are intended to simply 
+         help facilitate the interaction with the merit badge counselor.
+        </p>
+
+        <p>
+          NOTE:  This is intended to be a substitute for the worksheets that lived at http://usscouts.org/mb/worksheets/list.asp.
+          These sheets are no longer updated so do not match current requirements.
+        </p>
+      </div>
+    </section>
+
+    <section class="card badges-card">
+      <h2>Merit Badges <span id="badge-count" class="badge-count"></span></h2>
+      <div id="badges-list">
+        <p class="empty-state">No badges available.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

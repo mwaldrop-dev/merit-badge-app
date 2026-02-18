@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manage Badges — Merit Badge Worksheet Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-admin">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="btn btn-ghost back-link">← Browse Badges</a>
+      <div>
+        <h1 class="site-title">Manage Badges</h1>
+        <p class="site-subtitle">Add and remove merit badge content</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="card bookmarklet-card">
+      <h2>Quick Add — Bookmarklet</h2>
+      <p class="hint">Drag the button below to your bookmarks bar. Then, while viewing any merit badge page on scouting.org, click it to import the badge instantly — no file saving needed.</p>
+      <div class="bookmarklet-row">
+        <a class="bookmarklet-link" href="javascript:(function(){var fd=new FormData();fd.append('html',new Blob([document.documentElement.outerHTML],{type:'text/html'}),'page.html');fetch('http://localhost:3000/api/badges/upload',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){alert(d.name?'\u2713 Saved: '+d.name+' Merit Badge ('+d.requirements.length+' requirements)':'Error: '+d.error);}).catch(function(e){alert('Error: '+e.message);});})();" title="Drag this to your bookmarks bar">⚜ Save Merit Badge</a>
+        <span class="bookmarklet-hint">← drag to your bookmarks bar</span>
+      </div>
+    </section>
+
+    <section class="card upload-card">
+      <h2>Add a Merit Badge — File Upload</h2>
+
+      <ol class="how-to-steps">
+        <li>
+          Go to
+          <a href="https://www.scouting.org/skills/merit-badges/all/" target="_blank" rel="noopener">
+            scouting.org → Merit Badges
+          </a>
+          and open the page for the badge you want.
+        </li>
+        <li>
+          Save the page as HTML:<br>
+          <span class="platform-hint">Mac — <kbd>⌘S</kbd> &rarr; choose <strong>Webpage, HTML Only</strong></span><br>
+          <span class="platform-hint">Windows — <kbd>Ctrl+S</kbd> &rarr; choose <strong>Webpage, HTML only</strong></span>
+        </li>
+        <li>Upload the saved <code>.html</code> file below.</li>
+      </ol>
+
+      <form id="upload-form">
+        <label for="upload-file" class="file-label">
+          Saved Merit Badge Page (.html)
+          <div class="drop-zone" id="drop-zone">
+            <input
+              type="file"
+              id="upload-file"
+              name="html"
+              accept=".html,.htm,text/html"
+              required
+            />
+            <div class="drop-inner" aria-hidden="true">
+              <span class="drop-icon">🌐</span>
+              <span id="drop-text">Choose HTML file or drag &amp; drop</span>
+            </div>
+          </div>
+        </label>
+
+        <button type="submit" id="upload-btn" class="btn btn-primary">
+          Upload &amp; Parse Requirements
+        </button>
+        <div id="upload-status" class="status-message" hidden></div>
+      </form>
+    </section>
+
+    <section class="card badges-card">
+      <h2>Saved Badges <span id="badge-count" class="badge-count"></span></h2>
+      <div id="badges-list">
+        <p class="empty-state">No badges yet — add one above.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
