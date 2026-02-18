@@ -20,64 +20,73 @@
 
   <main class="container">
 
-    <section class="card bookmarklet-card">
-      <h2>Quick Add — Bookmarklet</h2>
-      <p class="hint">Drag the button below to your bookmarks bar. Then, while viewing any merit badge page on scouting.org, click it to import the badge instantly — no file saving needed.</p>
-      <div class="bookmarklet-row">
-        <a class="bookmarklet-link" id="bookmarklet-link" href="#" title="Drag this to your bookmarks bar">⚜ Save Merit Badge</a>
-        <span class="bookmarklet-hint">← drag to your bookmarks bar</span>
+    <section class="card add-card">
+      <h2>Add a Merit Badge</h2>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="bookmarklet">⚜ Bookmarklet</button>
+        <button class="tab-btn" data-tab="upload">File Upload</button>
       </div>
-      <script>
-        (function () {
-          var origin = window.location.origin;
-          var code = '(function(){var fd=new FormData();fd.append(\'html\',new Blob([document.documentElement.outerHTML],{type:\'text/html\'}),\'page.html\');fetch(\'' + origin + '/api/badges/upload\',{method:\'POST\',body:fd}).then(function(r){return r.json();}).then(function(d){alert(d.name?\'\u2713 Saved: \'+d.name+\' Merit Badge (\'+d.requirements.length+\' requirements)\':\'Error: \'+d.error);}).catch(function(e){alert(\'Error: \'+e.message);});})();';
-          document.getElementById('bookmarklet-link').href = 'javascript:' + code;
-        })();
-      </script>
-    </section>
 
-    <section class="card upload-card">
-      <h2>Add a Merit Badge — File Upload</h2>
+      <!-- Bookmarklet tab -->
+      <div class="tab-panel" id="tab-bookmarklet">
+        <p class="hint">Drag the button below to your bookmarks bar. Then, while viewing any merit badge page on scouting.org, click it to import the badge instantly — no file saving needed.</p>
+        <div class="bookmarklet-row">
+          <a class="bookmarklet-link" id="bookmarklet-link" href="#" title="Drag this to your bookmarks bar">⚜ Save Merit Badge</a>
+          <span class="bookmarklet-hint">← drag to your bookmarks bar</span>
+        </div>
+        <script>
+          (function () {
+            var origin = window.location.origin;
+            var code = '(function(){var fd=new FormData();fd.append(\'html\',new Blob([document.documentElement.outerHTML],{type:\'text/html\'}),\'page.html\');fetch(\'' + origin + '/api/badges/upload\',{method:\'POST\',body:fd}).then(function(r){return r.json();}).then(function(d){alert(d.name?\'\u2713 Saved: \'+d.name+\' Merit Badge (\'+d.requirements.length+\' requirements)\':\'Error: \'+d.error);}).catch(function(e){alert(\'Error: \'+e.message);});})();';
+            document.getElementById('bookmarklet-link').href = 'javascript:' + code;
+          })();
+        </script>
+      </div>
 
-      <ol class="how-to-steps">
-        <li>
-          Go to
-          <a href="https://www.scouting.org/skills/merit-badges/all/" target="_blank" rel="noopener">
-            scouting.org → Merit Badges
-          </a>
-          and open the page for the badge you want.
-        </li>
-        <li>
-          Save the page as HTML:<br>
-          <span class="platform-hint">Mac — <kbd>⌘S</kbd> &rarr; choose <strong>Webpage, HTML Only</strong></span><br>
-          <span class="platform-hint">Windows — <kbd>Ctrl+S</kbd> &rarr; choose <strong>Webpage, HTML only</strong></span>
-        </li>
-        <li>Upload the saved <code>.html</code> file below.</li>
-      </ol>
+      <!-- File upload tab -->
+      <div class="tab-panel" id="tab-upload" hidden>
+        <ol class="how-to-steps">
+          <li>
+            Go to
+            <a href="https://www.scouting.org/skills/merit-badges/all/" target="_blank" rel="noopener">
+              scouting.org → Merit Badges
+            </a>
+            and open the page for the badge you want.
+          </li>
+          <li>
+            Save the page as HTML:<br>
+            <span class="platform-hint">Mac — <kbd>⌘S</kbd> &rarr; choose <strong>Webpage, HTML Only</strong></span><br>
+            <span class="platform-hint">Windows — <kbd>Ctrl+S</kbd> &rarr; choose <strong>Webpage, HTML only</strong></span>
+          </li>
+          <li>Upload the saved <code>.html</code> file below.</li>
+        </ol>
 
-      <form id="upload-form">
-        <label for="upload-file" class="file-label">
-          Saved Merit Badge Page (.html)
-          <div class="drop-zone" id="drop-zone">
-            <input
-              type="file"
-              id="upload-file"
-              name="html"
-              accept=".html,.htm,text/html"
-              required
-            />
-            <div class="drop-inner" aria-hidden="true">
-              <span class="drop-icon">🌐</span>
-              <span id="drop-text">Choose HTML file or drag &amp; drop</span>
+        <form id="upload-form">
+          <label for="upload-file" class="file-label">
+            Saved Merit Badge Page (.html)
+            <div class="drop-zone" id="drop-zone">
+              <input
+                type="file"
+                id="upload-file"
+                name="html"
+                accept=".html,.htm,text/html"
+                required
+              />
+              <div class="drop-inner" aria-hidden="true">
+                <span class="drop-icon">🌐</span>
+                <span id="drop-text">Choose HTML file or drag &amp; drop</span>
+              </div>
             </div>
-          </div>
-        </label>
+          </label>
 
-        <button type="submit" id="upload-btn" class="btn btn-primary">
-          Upload &amp; Parse Requirements
-        </button>
-        <div id="upload-status" class="status-message" hidden></div>
-      </form>
+          <button type="submit" id="upload-btn" class="btn btn-primary">
+            Upload &amp; Parse Requirements
+          </button>
+          <div id="upload-status" class="status-message" hidden></div>
+        </form>
+      </div>
+
     </section>
 
     <section class="card badges-card">
@@ -90,6 +99,16 @@
 
   </main>
 
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.tab-btn').forEach(function (b) { b.classList.remove('active'); });
+        document.querySelectorAll('.tab-panel').forEach(function (p) { p.hidden = true; });
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).hidden = false;
+      });
+    });
+  </script>
   <script src="app.js"></script>
 </body>
 </html>
