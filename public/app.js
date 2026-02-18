@@ -59,10 +59,7 @@ function renderBadgeRow(b, showDelete) {
           : b.name}
         ${isEagle ? '<img src="/eagle-required.png" class="eagle-icon" alt="Eagle Scout Required" title="Eagle Scout Required" />' : ''}
       </span>
-      <span class="badge-meta">
-        ${b.requirementCount} requirement${b.requirementCount !== 1 ? 's' : ''}
-        &nbsp;·&nbsp; Updated ${formatDate(b.lastUpdated)}
-      </span>
+      <span class="badge-meta">${b.requirementCount} req&nbsp;·&nbsp;${formatDate(b.lastUpdated)}</span>
     </div>
     <div class="badge-actions">
       <a href="/form.html?badge=${b.slug}" class="btn btn-sm btn-primary">Worksheet</a>
@@ -98,8 +95,22 @@ async function loadBadgeList(badgesList, badgeCount, { emptyMessage, showDelete 
       return a.name.localeCompare(b.name);
     });
 
-    badgeCount.textContent = `(${badges.length})`;
-    badgesList.innerHTML   = badges.map((b) => renderBadgeRow(b, showDelete)).join('');
+    function render(list) {
+      badgeCount.textContent = `(${list.length})`;
+      badgesList.innerHTML   = list.length
+        ? list.map((b) => renderBadgeRow(b, showDelete)).join('')
+        : `<p class="empty-state">No badges match your search.</p>`;
+    }
+
+    render(badges);
+
+    const searchInput = document.getElementById('badge-search');
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        const q = searchInput.value.trim().toLowerCase();
+        render(q ? badges.filter((b) => b.name.toLowerCase().includes(q)) : badges);
+      });
+    }
   } catch (err) {
     badgesList.innerHTML = `<p class="error-state">Failed to load badges: ${err.message}</p>`;
   }

@@ -340,13 +340,13 @@ code {
 
 .badge-count { font-size: 0.85rem; color: var(--text-muted); font-weight: 400; }
 
-/* Eagle required icon */
+/* Eagle required icon — small inline badge next to name */
 .eagle-icon {
   display: inline-block;
-  width: 5rem;
-  height: 5rem;
+  width: 1.1rem;
+  height: 1.1rem;
   vertical-align: middle;
-  margin-left: 0.3rem;
+  margin-left: 0.25rem;
   object-fit: contain;
 }
 
@@ -355,18 +355,47 @@ code {
 .badge-row {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 0.85rem 0;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
   border-bottom: 1px solid var(--tan-dark);
-  flex-wrap: wrap;
 }
 .badge-row:last-child { border-bottom: none; }
 
-.badge-info { flex: 1; min-width: 200px; }
-.badge-name { font-weight: 600; display: block; }
-.badge-meta { font-size: 0.8rem; color: var(--text-muted); font-style: italic; }
+.badge-info {
+  flex: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.badge-name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.badge-meta { font-size: 0.75rem; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; }
 
-.badge-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.badge-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+
+/* Search / filter input */
+.badge-search {
+  display: block;
+  width: 100%;
+  padding: 0.4rem 0.75rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--tan-dark);
+  border-radius: 0.4rem;
+  font-size: 0.9rem;
+  background: var(--white);
+  color: var(--text-body);
+  box-sizing: border-box;
+}
+.badge-search:focus {
+  outline: none;
+  border-color: var(--green-mid);
+  box-shadow: 0 0 0 2px rgba(74,124,89,0.15);
+}
 
 .empty-state  { color: var(--text-muted); font-style: italic; }
 .error-state  { color: var(--danger); }
