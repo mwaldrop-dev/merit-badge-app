@@ -1,7 +1,7 @@
 {
   "name": "merit-badge-form-generator",
   "version": "1.0.0",
-  "description": "Generates fillable forms from Scouting America merit badge pamphlet PDFs",
+  "description": "Browse Scouting America merit badge requirements and generate fillable PDF worksheets",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
