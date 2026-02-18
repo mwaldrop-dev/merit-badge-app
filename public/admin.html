@@ -24,9 +24,16 @@
       <h2>Quick Add — Bookmarklet</h2>
       <p class="hint">Drag the button below to your bookmarks bar. Then, while viewing any merit badge page on scouting.org, click it to import the badge instantly — no file saving needed.</p>
       <div class="bookmarklet-row">
-        <a class="bookmarklet-link" href="javascript:(function(){var fd=new FormData();fd.append('html',new Blob([document.documentElement.outerHTML],{type:'text/html'}),'page.html');fetch('http://localhost:3000/api/badges/upload',{method:'POST',body:fd}).then(function(r){return r.json();}).then(function(d){alert(d.name?'\u2713 Saved: '+d.name+' Merit Badge ('+d.requirements.length+' requirements)':'Error: '+d.error);}).catch(function(e){alert('Error: '+e.message);});})();" title="Drag this to your bookmarks bar">⚜ Save Merit Badge</a>
+        <a class="bookmarklet-link" id="bookmarklet-link" href="#" title="Drag this to your bookmarks bar">⚜ Save Merit Badge</a>
         <span class="bookmarklet-hint">← drag to your bookmarks bar</span>
       </div>
+      <script>
+        (function () {
+          var origin = window.location.origin;
+          var code = '(function(){var fd=new FormData();fd.append(\'html\',new Blob([document.documentElement.outerHTML],{type:\'text/html\'}),\'page.html\');fetch(\'' + origin + '/api/badges/upload\',{method:\'POST\',body:fd}).then(function(r){return r.json();}).then(function(d){alert(d.name?\'\u2713 Saved: \'+d.name+\' Merit Badge (\'+d.requirements.length+\' requirements)\':\'Error: \'+d.error);}).catch(function(e){alert(\'Error: \'+e.message);});})();';
+          document.getElementById('bookmarklet-link').href = 'javascript:' + code;
+        })();
+      </script>
     </section>
 
     <section class="card upload-card">
